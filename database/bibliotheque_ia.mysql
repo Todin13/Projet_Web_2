@@ -10,16 +10,16 @@ CREATE TABLE Auteur (
 CREATE TABLE Livre (
     ISSN VARCHAR(8),
     Titre VARCHAR(255) NOT NULL,
-    Resume TEXT,
-    Nbpages INT,
-    Domaine VARCHAR(100),
+    Resume TEXT NOT NULL,
+    Nbpages INT NOT NULL,
+    Domaine VARCHAR(100) NOT NULL,
     PRIMARY KEY (ISSN)
 );
 
 CREATE TABLE Ecrit (
     Id INT AUTO_INCREMENT,
-    Num INT,
-    ISSN VARCHAR(50),
+    Num INT NOT NULL,
+    ISSN VARCHAR(50) NOT NULL,
     FOREIGN KEY (Num) REFERENCES Auteur(Num),
     FOREIGN KEY (ISSN) REFERENCES Livre(ISSN),
     PRIMARY KEY (Id)
@@ -27,9 +27,9 @@ CREATE TABLE Ecrit (
 
 CREATE TABLE Admin (
     AdminId INT AUTO_INCREMENT,
-    Nom VARCHAR(100),
-    Email VARCHAR(100),
-    MotDePasse VARCHAR(100),
-    Tel VARCHAR(10),
+    Nom VARCHAR(100) NOT NULL,
+    Email VARCHAR(100) NOT NULL,
+    MotDePasse VARCHAR(100) NOT NULL,
+    Tel VARCHAR(10) NOT NULL,
     PRIMARY KEY (AdminId)
 );
