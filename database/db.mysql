@@ -1,5 +1,34 @@
-CREATE TABLE IF NOT EXISTS utilisateurs (
-  NomUtilisateur varchar(20) NOT NULL,
-  MotPasse varchar(20) NOT NULL,
-  email 
-)
+CREATE TABLE Auteur (
+    Num INT AUTO_INCREMENT ,
+    Nom VARCHAR(100) NOT NULL,
+    Prenom VARCHAR(100) NOT NULL,
+    DateNaissance DATE,
+    Nationalite VARCHAR(100),
+    PRIMARY KEY (Num)
+);
+
+CREATE TABLE Livre (
+    ISSN VARCHAR(50),
+    Titre VARCHAR(255) NOT NULL,
+    Résumé TEXT,
+    Nbpages INT,
+    Domaine VARCHAR(100),
+   PRIMARY KEY (ISSN)
+);
+
+CREATE TABLE Ecrit (
+    Id INT AUTO_INCREMENT,
+    Num INT,
+    ISSN VARCHAR(50),
+    FOREIGN KEY (Num) REFERENCES Auteur(Num),
+    FOREIGN KEY (ISSN) REFERENCES Livre(ISSN),
+    PRIMARY KEY (Id)
+);
+
+CREATE TABLE Admin (
+    AdminId INT AUTO_INCREMENT,
+    Nom VARCHAR(100),
+    Email VARCHAR(100),
+    MotDePasse VARCHAR(100),
+    PRIMARY KEY (AdminId)
+);
