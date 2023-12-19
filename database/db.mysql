@@ -16,7 +16,6 @@ CREATE TABLE Livre (
     PRIMARY KEY (ISSN)
 );
 
-
 CREATE TABLE Ecrit (
     Id INT AUTO_INCREMENT,
     Num INT,
@@ -31,6 +30,6 @@ CREATE TABLE Admin (
     Nom VARCHAR(100),
     Email VARCHAR(100),
     MotDePasse VARCHAR(100),
-    Tel VARCHAR(10)
+    Tel VARCHAR(10),
     PRIMARY KEY (AdminId)
 );
