@@ -1,19 +1,19 @@
 CREATE TABLE Auteur (
     Num INT AUTO_INCREMENT ,
-    Nom VARCHAR(100) NOT NULL,
-    Prenom VARCHAR(100) NOT NULL,
+    Nom VARCHAR(15) NOT NULL,
+    Prenom VARCHAR(15) NOT NULL,
     DateNaissance DATE,
     Nationalite VARCHAR(100),
     PRIMARY KEY (Num)
 );
 
 CREATE TABLE Livre (
-    ISSN VARCHAR(50),
+    ISSN VARCHAR(8),
     Titre VARCHAR(255) NOT NULL,
-    Résumé TEXT,
+    Resume TEXT,
     Nbpages INT,
     Domaine VARCHAR(100),
-   PRIMARY KEY (ISSN)
+    PRIMARY KEY (ISSN)
 );
 
 CREATE TABLE Ecrit (
@@ -30,5 +30,6 @@ CREATE TABLE Admin (
     Nom VARCHAR(100),
     Email VARCHAR(100),
     MotDePasse VARCHAR(100),
+    Tel VARCHAR(10),
     PRIMARY KEY (AdminId)
 );
