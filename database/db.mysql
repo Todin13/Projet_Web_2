@@ -1,1 +1,5 @@
-
+CREATE TABLE IF NOT EXISTS utilisateurs (
+  NomUtilisateur varchar(20) NOT NULL,
+  MotPasse varchar(20) NOT NULL,
+  email 
+)
