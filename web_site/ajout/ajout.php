@@ -86,42 +86,52 @@
     </form>
 
     <?php
+    session_start();
     include("../connect_db/db.php"); 
+
+    $defaultTable = 'auteur';
 
     if ($_SERVER["REQUEST_METHOD"] == "POST") {
         $selectedTable = sanitizeInput($_POST["table"]);
+        $_SESSION['selectedTable'] = $selectedTable; 
+    } elseif (isset($_SESSION['selectedTable'])) {
+        $selectedTable = $_SESSION['selectedTable']; 
+    } 
+    else {
+         $selectedTable = $defaultTable;
+    }
 
-        echo generateInputFields($selectedTable);
+    echo generateInputFields($selectedTable);
 
-        echo "<h2>Table: $selectedTable</h2>";
+    echo "<h2>Table: $selectedTable</h2>";
 
-        $result = $pdo->query("SELECT * FROM $selectedTable");
-        echo "<table border='1'>";
-        // Output table header
-        echo "<tr>";
-        if ($result->rowCount() > 0) {
-            $row = $result->fetch(PDO::FETCH_ASSOC);
-            foreach ($row as $key => $value) {
-                echo "<th>$key</th>";
+    $result = $pdo->query("SELECT * FROM $selectedTable");
+    echo "<table border='1'>";
+    // Output table header
+    echo "<tr>";
+    if ($result->rowCount() > 0) {
+        $row = $result->fetch(PDO::FETCH_ASSOC);
+        foreach ($row as $key => $value) {
+            echo "<th>$key</th>";
+        }
+        echo "</tr>";
+
+        // Output data
+        $result->execute();
+        while ($row = $result->fetch(PDO::FETCH_ASSOC)) {
+            echo "<tr>";
+            foreach ($row as $value) {
+                echo "<td>$value</td>";
             }
             echo "</tr>";
+        }
 
-            // Output data
-            $result->execute();
-            while ($row = $result->fetch(PDO::FETCH_ASSOC)) {
-                echo "<tr>";
-                foreach ($row as $value) {
-                    echo "<td>$value</td>";
-                }
-                echo "</tr>";
-            }
+    } else {
+        echo "<th colspan='2'>No data found in the selected table.</t;h>";
+    };
 
-        } else {
-            echo "<th colspan='2'>No data found in the selected table.</t;h>";
-        };
-
-        echo "</table>";       
-    }
+    echo "</table>";    
+    exit();   
     ?>
 
 </body>
