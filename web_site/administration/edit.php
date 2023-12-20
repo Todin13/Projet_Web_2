@@ -2,52 +2,52 @@
     session_start();
     include("../connect_db/db.php");
 
-    $updateSuccess = false;
+    function sanitizeInput($data) {
+        return htmlspecialchars(stripslashes(trim($data)));
+    }
 
-    if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST["update"])) {
-        $table = $_POST["table"];
-        $updateData = [];
+    if ($_SERVER["REQUEST_METHOD"] == "POST") {
+        $selectedTable = sanitizeInput($_POST["table"]);
 
+        // Validate and sanitize other form inputs as needed
+        // ...
+
+        // Construct the UPDATE query based on the selected table and form data
+        $updateQuery = "UPDATE $selectedTable SET ";
         foreach ($_POST as $key => $value) {
-            if ($key !== "table" && $key !== "update") {
-                $updateData[$key] = htmlspecialchars(stripslashes(trim($value)));
-            }
-        }
-
-        if (!empty($updateData)) {
-            $updateQuery = "UPDATE $table SET ";
-            foreach ($updateData as $key => $value) {
+            
+            if ($key !== 'table') {
                 $updateQuery .= "$key = :$key, ";
             }
-            $updateQuery = rtrim($updateQuery, ", ");
-            $updateQuery .= " WHERE ";
+        } 
 
-            foreach ($updateData as $key => $value) {
+        $updateQuery = rtrim($updateQuery, ', ');
+
+        $updateQuery .= " WHERE ";
+        foreach ($_POST as $key => $value) {
+            if ($key !== 'table') {
                 $updateQuery .= "$key = :$key AND ";
             }
-            $updateQuery = rtrim($updateQuery, " AND ");
+        } 
 
-            $stmt = $pdo->prepare($updateQuery);
+        $updateQuery = rtrim($updateQuery, 'AND ');
 
-            foreach ($updateData as $key => $value) {
-                $stmt->bindParam(":$key", $updateData[$key]);
-            }
-
-            if ($stmt->execute()) {
-                $updateSuccess = true;
-            } else {
-                echo "Error updating the row. Please try again.";
+        $stmt = $pdo->prepare($updateQuery);
+        foreach ($_POST as $key => $value) {
+            
+            if ($key !== 'table') {
+                $stmt->bindValue(":$key", sanitizeInput($value));
             }
         }
-    }
 
-    // Output success or failure message
-    if ($updateSuccess) {
-        echo "Row updated successfully!";
+        if ($stmt->execute()) {
+            echo "Data updated successfully.";
+        } else {
+            echo "Error updating data.";
+        }
     } else {
-        echo "Failed to update the row.";
-    }
 
-    // You may choose to redirect to another page after the update or simply exit
-    exit();
+        header('Location: index.php');
+        exit();
+    }
 ?>
