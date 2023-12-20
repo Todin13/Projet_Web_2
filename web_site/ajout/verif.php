@@ -19,7 +19,9 @@
             if ($pdo->query($sql) === TRUE) {
                 echo "Author added successfully.";
             } else {
+                $errorInfo = $pdo->errorInfo();
                 echo "Error adding author: " ;
+                var_dump($errorInfo);
             }
         }
 
@@ -34,7 +36,9 @@
             if ($pdo->query($sql) === TRUE) {
                 echo "Book added successfully.";
             } else {
+                $errorInfo = $pdo->errorInfo();
                 echo "Error adding book: " ;
+                var_dump($errorInfo);
             }
         }
         
@@ -46,7 +50,9 @@
             if ($pdo->query($sql) === TRUE) {
                 echo "Author associated with book successfully.";
             } else {
-                echo "Error associating author with book: " ;
+                $errorInfo = $pdo->errorInfo();
+                echo "Error associating author with book: ";
+                var_dump($errorInfo);
             }
         }
     }
