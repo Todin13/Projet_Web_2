@@ -48,11 +48,28 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             <svg viewBox="0 0 16 16" fill="#2e2e2e" height="16" width="16" xmlns="http://www.w3.org/2000/svg" class="inputIcon">
             <path d="M8 1a2 2 0 0 1 2 2v4H6V3a2 2 0 0 1 2-2zm3 6V3a3 3 0 0 0-6 0v4a2 2 0 0 0-2 2v5a2 2 0 0 0 2 2h6a2 2 0 0 0 2-2V9a2 2 0 0 0-2-2z"></path>
             </svg>
-            <input placeholder="Password" name="MotDePasse" class="inputField" type="Password" required>
+            <input placeholder="Password" name="MotDePasse" class="inputField" type="Password" id="pass" required>
+            <img src="images/red_eye.png" id="eye" onClick="changer()" />
         </div>
                     
                 
         <button id="button">Submit</button>
         </form>
+        <script>
+            e=true;
+            function changer(){
+                if(e){
+                    document.getElementById("pass").setAttribute("type","text");
+                    document.getElementById("eye").src="images/green_eye.png";
+                    e=false;
+                }
+                else{
+                    document.getElementById("pass").setAttribute("type","Password");
+                    document.getElementById("eye").src="images/red_eye.png";
+                    e=true
+                }
+            }
+
+        </script>
     </body>
 </html>
