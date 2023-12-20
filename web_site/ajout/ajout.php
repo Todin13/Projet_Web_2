@@ -123,14 +123,21 @@
             foreach ($row as $value) {
                 echo "<td>$value</td>";
             }
-            echo "<td><form method='post' action='delete.php'>";  // Add a form for the delete button
+            echo "<td><form method='post' action='delete.php'>";  
             echo "<input type='hidden' name='table' value='$selectedTable'>";
             foreach ($row as $key => $value) {
                 echo "<input type='hidden' name='$key' value='$value'>";
             }
-            echo "<input type='submit' value='Delete'></form></td>";  // Add the delete button
+            echo "<input type='submit' value='Delete'></form></td>"; 
+            echo "<td><form method='post' action='edit.php'>";
+            echo "<input type='hidden' name='table' value='$selectedTable'>";
+            foreach ($row as $key => $value) {
+                echo "<input type='hidden' name='$key' value='$value'>";
+            }
+            echo "<input type='submit' value='Edit'></form></td>";
             echo "</tr>";
         }
+
 
     } else {
         echo "<th colspan='2'>No data found in the selected table.</th>";
