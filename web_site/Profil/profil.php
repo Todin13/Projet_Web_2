@@ -19,16 +19,6 @@
                                     <h5>
                                         Kshiti Ghelani
                                     </h5>
-                                    <h6>
-                                        Web Developer and Designer
-                                    </h6>
-                                    <p class="proile-rating">RANKINGS : <span>8/10</span></p>
-                            
-                                <label class="nav-item">
-                                    <a class="nav-link active" id="home-tab" data-toggle="tab"  aria-controls="home" aria-selected="true">About</a>
-                                </label>
-                                
-                            
                         </div>
                     </div>
                     <div class="col-md-2">
@@ -40,6 +30,23 @@
                         <div class="tab-content profile-tab" id="myTabContent">
                             <div class="tab-pane fade show active" id="home" role="tabpanel" aria-labelledby="home-tab">
                                        
+
+                                        <div class="row">
+                                            <div class="col-md-6">
+                                                <label>Username</label>
+                                            </div>
+                                            <div class="col-md-6">
+                                                <p>1</p>
+                                            </div>
+                                        </div>
+                                        <div class="row">
+                                            <div class="col-md-6">
+                                                <label>PASSWORD</label>
+                                            </div>
+                                            <div class="col-md-6">
+                                                <p>********</p>
+                                            </div>
+                                        </div>
                                         <div class="row">
                                             <div class="col-md-6">
                                                 <label>Name</label>
