@@ -1,62 +1,67 @@
 <?php
-include("../connect_db/db.php");
+    include("../connect_db/db.php");
 
-$tables = ['auteur', 'livre', 'ecrit'];
-// Function to sanitize user input
-function sanitizeInput($data) {
-    return htmlspecialchars(stripslashes(trim($data)));
-};
+    // if (!isset($_SESSION['username'])) {
+    //     header('Location: ../home/');
+    //     exit();
+    // } 
 
-function generateInputFields($table){
+    $tables = ['auteur', 'livre', 'ecrit'];
+    // Function to sanitize user input
+    function sanitizeInput($data) {
+        return htmlspecialchars(stripslashes(trim($data)));
+    };
 
-    switch ($table) {
-    
-        case 'auteur' :
-            echo '<h2>Ajouter un Auteur </h2>';
-            echo '<form method="post" action="" class="add_author">';
-            echo '<label>Nom:</label>';
-            echo '<input type="text" name="nom" required><br>';
-            echo '<label>Prenom:</label>';
-            echo '<input type="text" name="prenom" required><br>';
-            echo '<label>Date de Naissance:</label>';
-            echo '<input type="date" name="datenaissance" required><br>';
-            echo '<label>Nationalite:</label>';
-            echo '<input type="text" name="nationalite" required><br>';
-            echo '<input type="submit" value="Add Author">';
-            echo '</form>';
-            break;
+    function generateInputFields($table){
 
-        case 'livre':
+        switch ($table) {
         
-            echo '<h2>Ajouter un livre</h2>';
-            echo '<form method="post" action="" class="add_book">';
-            echo '<label>ISSN:</label>';
-            echo '<input type="text" name="issn" required><br>';
-            echo '<label>Titre:</label>';
-            echo '<input type="text" name="titre" required><br>';
-            echo '<label>Resume:</label>';
-            echo '<textarea name="resume" required></textarea><br>';
-            echo'<label>Nombre de Pages:</label>';
-            echo '<input type="number" name="nbpages" required><br>';
-            echo '<label>Domaine:</label>';
-            echo '<input type="text" name="domaine" required><br>';
-            echo '<input type="submit" value="Add Book">';
-            echo '</form>';
-            break;
+            case 'auteur' :
+                echo '<h2>Ajouter un Auteur </h2>';
+                echo '<form method="post" action="verif.php" class="add_author">';
+                echo '<label>Nom:</label>';
+                echo '<input type="text" name="nom" required><br>';
+                echo '<label>Prenom:</label>';
+                echo '<input type="text" name="prenom" required><br>';
+                echo '<label>Date de Naissance:</label>';
+                echo '<input type="date" name="datenaissance" required><br>';
+                echo '<label>Nationalite:</label>';
+                echo '<input type="text" name="nationalite" required><br>';
+                echo '<input type="submit" value="Add Author">';
+                echo '</form>';
+                break;
+
+            case 'livre':
+            
+                echo '<h2>Ajouter un livre</h2>';
+                echo '<form method="post" action="verif.php" class="add_book">';
+                echo '<label>ISSN:</label>';
+                echo '<input type="text" name="issn" required><br>';
+                echo '<label>Titre:</label>';
+                echo '<input type="text" name="titre" required><br>';
+                echo '<label>Resume:</label>';
+                echo '<textarea name="resume" required></textarea><br>';
+                echo'<label>Nombre de Pages:</label>';
+                echo '<input type="number" name="nbpages" required><br>';
+                echo '<label>Domaine:</label>';
+                echo '<input type="text" name="domaine" required><br>';
+                echo '<input type="submit" value="Add Book">';
+                echo '</form>';
+                break;
+            
+            case 'ecrit':
         
-        case 'ecrit':
-    
-            echo '<h2>Associez un Livre avec un ou plusieurs Auteurs</h2>';
-            echo '<form method="post" action="" class="add_association">';
-            echo '<label>Num Auteur:</label>';
-            echo '<input type="number" name="num_auteur" required><br>';
-            echo '<label>ISSN Livre:</label>';
-            echo '<input type="text" name="issn_livre" required><br>';
-            echo '<input type="submit" value="Associate Author with Book">';
-            echo '</form>';
-            break;
-    }
-};
+                echo '<h2>Associez un Livre avec un ou plusieurs Auteurs</h2>';
+                echo '<form method="post" action="verif.php" class="add_association">';
+                echo '<label>Num Auteur:</label>';
+                echo '<input type="number" name="num_auteur" required><br>';
+                echo '<label>ISSN Livre:</label>';
+                echo '<input type="text" name="issn_livre" required><br>';
+                echo '<input type="submit" value="Associate Author with Book">';
+                echo '</form>';
+                break;
+        }
+    };
 ?>
 
 <!DOCTYPE html>
