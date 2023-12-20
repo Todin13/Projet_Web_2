@@ -16,11 +16,11 @@
             $nationalite = $_POST["nationalite"];
 
             $sql = "INSERT INTO Auteur (Nom, Prenom, DateNaissance, Nationalite) VALUES ('$nom', '$prenom', '$datenaissance', '$nationalite')";
-            if ($pdo->query($sql) === TRUE) {
+            if ($pdo->query($sql)) {
                 echo "Author added successfully.";
             } else {
                 $errorInfo = $pdo->errorInfo();
-                echo "Error adding author: " ;
+                echo "Error adding author: ";
                 var_dump($errorInfo);
             }
         }
@@ -33,11 +33,11 @@
             $domaine = $_POST["domaine"];
     
             $sql = "INSERT INTO Livre (ISSN, Titre, Resume, Nbpages, Domaine) VALUES ('$issn', '$titre', '$resume', '$nbpages', '$domaine')";
-            if ($pdo->query($sql) === TRUE) {
-                echo "Book added successfully.";
+            if ($pdo->query($sql)) {
+                echo "Author added successfully.";
             } else {
                 $errorInfo = $pdo->errorInfo();
-                echo "Error adding book: " ;
+                echo "Error adding author: ";
                 var_dump($errorInfo);
             }
         }
@@ -47,11 +47,11 @@
             $issn_livre = $_POST["issn_livre"];
 
             $sql = "INSERT INTO Ecrit (Num, ISSN) VALUES ('$num_auteur', '$issn_livre')";
-            if ($pdo->query($sql) === TRUE) {
-                echo "Author associated with book successfully.";
+            if ($pdo->query($sql)) {
+                echo "Author added successfully.";
             } else {
                 $errorInfo = $pdo->errorInfo();
-                echo "Error associating author with book: ";
+                echo "Error adding author: ";
                 var_dump($errorInfo);
             }
         }
