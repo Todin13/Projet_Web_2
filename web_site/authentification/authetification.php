@@ -1,6 +1,6 @@
 <?php
 session_start();
-include('db.php');
+include('../connect_db/db.php');
 
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $AdminID = $_POST['AdminID'];
