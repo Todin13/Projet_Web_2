@@ -18,6 +18,8 @@
             $sql = "INSERT INTO Auteur (Nom, Prenom, DateNaissance, Nationalite) VALUES ('$nom', '$prenom', '$datenaissance', '$nationalite')";
             if ($pdo->query($sql)) {
                 echo "Author added successfully.";
+                header('Location: ajout.php');
+                exit();
             } else {
                 $errorInfo = $pdo->errorInfo();
                 echo "Error adding author: ";
@@ -35,6 +37,8 @@
             $sql = "INSERT INTO Livre (ISSN, Titre, Resume, Nbpages, Domaine) VALUES ('$issn', '$titre', '$resume', '$nbpages', '$domaine')";
             if ($pdo->query($sql)) {
                 echo "Author added successfully.";
+                header('Location: ajout.php');
+                exit();
             } else {
                 $errorInfo = $pdo->errorInfo();
                 echo "Error adding author: ";
@@ -49,6 +53,8 @@
             $sql = "INSERT INTO Ecrit (Num, ISSN) VALUES ('$num_auteur', '$issn_livre')";
             if ($pdo->query($sql)) {
                 echo "Author added successfully.";
+                header('Location: ajout.php');
+                exit();
             } else {
                 $errorInfo = $pdo->errorInfo();
                 echo "Error adding author: ";
