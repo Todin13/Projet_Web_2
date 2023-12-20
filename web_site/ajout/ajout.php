@@ -1,4 +1,5 @@
 <?php
+    session_start();
     include("../connect_db/db.php");
 
     // if (!isset($_SESSION['username'])) {
@@ -85,9 +86,7 @@
         <input type="submit" value="Show Table">
     </form>
 
-    <?php
-    session_start();
-    include("../connect_db/db.php"); 
+    <?php 
 
     $defaultTable = 'auteur';
 
@@ -114,6 +113,7 @@
         foreach ($row as $key => $value) {
             echo "<th>$key</th>";
         }
+        echo "<th>Action</th>";  // Add a column for the delete button
         echo "</tr>";
 
         // Output data
@@ -123,14 +123,20 @@
             foreach ($row as $value) {
                 echo "<td>$value</td>";
             }
+            echo "<td><form method='post' action='delete.php'>";  // Add a form for the delete button
+            echo "<input type='hidden' name='table' value='$selectedTable'>";
+            foreach ($row as $key => $value) {
+                echo "<input type='hidden' name='$key' value='$value'>";
+            }
+            echo "<input type='submit' value='Delete'></form></td>";  // Add the delete button
             echo "</tr>";
         }
 
     } else {
-        echo "<th colspan='2'>No data found in the selected table.</t;h>";
-    };
+        echo "<th colspan='2'>No data found in the selected table.</th>";
+    }
 
-    echo "</table>";    
+    echo "</table>";   
     exit();   
     ?>
 
