@@ -1,30 +1,66 @@
 <?php
 include("../connect_db/db.php");
 
-$tables = array();
-$result = $pdo->query("SHOW TABLES");
-while ($row = $result->fetch(PDO::FETCH_NUM)) {
-    $tables[] = $row[0];
-};
-
+$tables = ['auteur', 'livre', 'ecrit'];
 // Function to sanitize user input
 function sanitizeInput($data) {
     return htmlspecialchars(stripslashes(trim($data)));
-}
+};
 
-// Function to generate input fields based on table columns
-function generateInputFields($columns) {
-    $inputFields = '';
-    foreach ($columns as $column) {
-        $inputFields .= "<label for='$column'>$column:</label>";
-        $inputFields .= "<input type='text' name='$column' id='$column' required><br>";
+function generateInputFields($table){
+
+    switch ($table) {
+    
+        case 'auteur' :
+            echo '<h2>Ajouter un Auteur </h2>';
+            echo '<form method="post" action="" class="add_author">';
+            echo '<label>Nom:</label>';
+            echo '<input type="text" name="nom" required><br>';
+            echo '<label>Prenom:</label>';
+            echo '<input type="text" name="prenom" required><br>';
+            echo '<label>Date de Naissance:</label>';
+            echo '<input type="date" name="datenaissance" required><br>';
+            echo '<label>Nationalite:</label>';
+            echo '<input type="text" name="nationalite" required><br>';
+            echo '<input type="submit" value="Add Author">';
+            echo '</form>';
+            break;
+
+        case 'livre':
+        
+            echo '<h2>Ajouter un livre</h2>';
+            echo '<form method="post" action="" class="add_book">';
+            echo '<label>ISSN:</label>';
+            echo '<input type="text" name="issn" required><br>';
+            echo '<label>Titre:</label>';
+            echo '<input type="text" name="titre" required><br>';
+            echo '<label>Resume:</label>';
+            echo '<textarea name="resume" required></textarea><br>';
+            echo'<label>Nombre de Pages:</label>';
+            echo '<input type="number" name="nbpages" required><br>';
+            echo '<label>Domaine:</label>';
+            echo '<input type="text" name="domaine" required><br>';
+            echo '<input type="submit" value="Add Book">';
+            echo '</form>';
+            break;
+        
+        case 'ecrit':
+    
+            echo '<h2>Associez un Livre avec un ou plusieurs Auteurs</h2>';
+            echo '<form method="post" action="" class="add_association">';
+            echo '<label>Num Auteur:</label>';
+            echo '<input type="number" name="num_auteur" required><br>';
+            echo '<label>ISSN Livre:</label>';
+            echo '<input type="text" name="issn_livre" required><br>';
+            echo '<input type="submit" value="Associate Author with Book">';
+            echo '</form>';
+            break;
     }
-    return $inputFields;
-}
+};
 ?>
 
 <!DOCTYPE html>
-<html lang="en">
+<html lang="fr">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -49,6 +85,9 @@ function generateInputFields($columns) {
 
     if ($_SERVER["REQUEST_METHOD"] == "POST") {
         $selectedTable = sanitizeInput($_POST["table"]);
+
+        echo generateInputFields($selectedTable);
+
         echo "<h2>Table: $selectedTable</h2>";
 
         $result = $pdo->query("SELECT * FROM $selectedTable");
@@ -74,38 +113,11 @@ function generateInputFields($columns) {
 
         } else {
             echo "<th colspan='2'>No data found in the selected table.</t;h>";
-        }
-        
-        $columnNames = $pdo->query("SHOW COLUMNS FROM $selectedTable");
+        };
 
-        $columns = array();
-
-        foreach ($columnNames as $column) {
-            if (strpos($column['Extra'], 'auto_increment') === false) {
-                $columns[] = $column['Field'];
-            }
-        }
-
-        echo "</table>";
-        // Add form for inserting data
-        echo "<h2>Add Data to $selectedTable</h2>";
-        echo "<form method='post' action=''>";
-        echo generateInputFields($columns);
-        echo "<input type='submit' name='AddData' value='Add Data'>";
-        echo "</form>";
-
-        // Handle form submission for adding data
-        if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST['AddData'])) {
-
-            $columns = implode(", ", array_keys($_POST));
-            $values = "'" . implode("', '", array_map('sanitizeInput', $_POST)) . "'";
-
-            $sql = "INSERT INTO $selectedTable ($columns) VALUES ($values)";
-            $pdo->exec($sql);
-
-            echo "Data added successfully.";
-        }
+        echo "</table>";       
     }
     ?>
+
 </body>
 </html>
