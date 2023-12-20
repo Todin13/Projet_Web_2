@@ -145,13 +145,11 @@
                 echo "<input type='hidden' name='$key' value='$value'>";
             }
             echo "<input type='submit' value='Supprimer'></form></td>"; 
-            //echo "<td><form method='post' action='edit.php'>";
-            echo "<input type='hidden' name='table' value='$selectedTable'>";
-            // foreach ($row as $key => $value) {
-            //     echo "<input type='hidden' name='$key' value='$value'>";
-            // }
-            // echo "<input type='submit' value='Modifier'>";
-            echo "<td><button onclick='openModifyPopup(" . json_encode($row) . ")'>Modify</button></form></td>";
+            echo "<td><input type='hidden' name='table' value='$selectedTable'>";
+             foreach ($row as $key => $value) {
+                 echo "<input type='hidden' name='$key' value='$value'>";
+            }
+            echo "<input type='submit' onclick='openModifyPopup(" . json_encode($row) . ")' value='Modifier'></td>";
             echo "</tr>";
         }
 
