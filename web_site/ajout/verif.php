@@ -15,11 +15,11 @@
             $datenaissance = $_POST["datenaissance"];
             $nationalite = $_POST["nationalite"];
 
-            $sql = "INSERT INTO authors (nom, prenom, datenaissance, nationalite) VALUES ('$nom', '$prenom', '$datenaissance', '$nationalite')";
-            if ($conn->query($sql) === TRUE) {
+            $sql = "INSERT INTO Auteur (Nom, Prenom, DateNaissance, Nationalite) VALUES ('$nom', '$prenom', '$datenaissance', '$nationalite')";
+            if ($pdo->query($sql) === TRUE) {
                 echo "Author added successfully.";
             } else {
-                echo "Error adding author: " . $conn->error;
+                echo "Error adding author: " ;
             }
         }
 
@@ -30,11 +30,11 @@
             $nbpages = $_POST["nbpages"];
             $domaine = $_POST["domaine"];
     
-            $sql = "INSERT INTO books (issn, titre, resume, nbpages, domaine) VALUES ('$issn', '$titre', '$resume', '$nbpages', '$domaine')";
-            if ($conn->query($sql) === TRUE) {
+            $sql = "INSERT INTO Livre (ISSN, Titre, Resume, Nbpages, Domaine) VALUES ('$issn', '$titre', '$resume', '$nbpages', '$domaine')";
+            if ($pdo->query($sql) === TRUE) {
                 echo "Book added successfully.";
             } else {
-                echo "Error adding book: " . $conn->error;
+                echo "Error adding book: " ;
             }
         }
         
@@ -42,11 +42,11 @@
             $num_auteur = $_POST["num_auteur"];
             $issn_livre = $_POST["issn_livre"];
 
-            $sql = "INSERT INTO author_book_association (num_auteur, issn_livre) VALUES ('$num_auteur', '$issn_livre')";
-            if ($conn->query($sql) === TRUE) {
+            $sql = "INSERT INTO Ecrit (Num, ISSN) VALUES ('$num_auteur', '$issn_livre')";
+            if ($pdo->query($sql) === TRUE) {
                 echo "Author associated with book successfully.";
             } else {
-                echo "Error associating author with book: " . $conn->error;
+                echo "Error associating author with book: " ;
             }
         }
     }
