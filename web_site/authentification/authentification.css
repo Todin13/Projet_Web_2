@@ -1,3 +1,5 @@
+
+
 .form_main {
     width: 280px;
     display: flex;
@@ -8,6 +10,7 @@
     padding: 30px 30px 30px 30px;
     border-radius: 30px;
     box-shadow: 0px 0px 40px rgba(0, 0, 0, 0.062);
+    margin: auto;
   }
   
   .heading {
