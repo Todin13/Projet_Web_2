@@ -6,6 +6,7 @@
     //     header('Location: ../home/');
     //     exit();
     // } 
+
     if ($_SERVER["REQUEST_METHOD"] == "POST") {
         
         $table = htmlspecialchars($_POST["table"]);
@@ -28,8 +29,12 @@
 
         if ($stmt->execute()) {
             echo "Record deleted successfully.";
+            header('Location: ajout.php');
+            exit();
         } else {
             echo "Error deleting record.";
+            $errorInfo = $pdo->errorInfo();
+            var_dump($errorInfo);
         }
     } else {
         echo "Invalid request.";
