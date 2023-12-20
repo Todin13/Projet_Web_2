@@ -72,15 +72,21 @@ function generateInputFields($columns) {
                 echo "</tr>";
             }
 
-            // Add form for inserting data
-            $columns = array_keys($row);
         } else {
-            echo "<th colspan='2'>No data found in the selected table.</th>";
-            // Initialize empty columns array
-            $columns = array();
+            echo "<th colspan='2'>No data found in the selected table.</t;h>";
         }
-        echo "</table>";
+        
+        $columnNames = $pdo->query("SHOW COLUMNS FROM $selectedTable");
 
+        $columns = array();
+
+        foreach ($columnNames as $column) {
+            if (strpos($column['Extra'], 'auto_increment') === false) {
+                $columns[] = $column['Field'];
+            }
+        }
+
+        echo "</table>";
         // Add form for inserting data
         echo "<h2>Add Data to $selectedTable</h2>";
         echo "<form method='post' action=''>";
