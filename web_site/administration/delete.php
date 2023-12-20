@@ -29,7 +29,7 @@
 
         if ($stmt->execute()) {
             echo "Record deleted successfully.";
-            header('Location: ajout.php');
+            header('Location: administration_data.php');
             exit();
         } else {
             echo "Error deleting record.";

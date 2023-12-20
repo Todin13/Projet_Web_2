@@ -70,12 +70,28 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Table Viewer</title>
+    <title>Administrations des données</title>
 </head>
 <body>
-    <h2>Select a Table</h2>
+
+    <script>
+        function openModifyPopup(data) {
+            var popup = window.open("", "Modify Row", "width=400,height=400");
+            popup.document.write("<h2>Modify Row</h2>");
+            popup.document.write("<form method='post' action='edit.php'>");
+            popup.document.write("<input type='hidden' name='table' value='" + data['table'] + "'>");
+            for (var key in data) {
+                popup.document.write("<label>" + key + ":</label>");
+                popup.document.write("<input type='text' name='" + key + "' value='" + data[key] + "'><br>");
+            }
+            popup.document.write("<input type='submit' value='Modify'></form>");
+        }
+    </script>
+
+
+    <h2>Selection de la table</h2>
     <form method="post" action="">
-        <label for="table">Choose a table:</label>
+        <label for="table">Choisissez une table:</label>
         <select name="table" id="table">
             <?php
             foreach ($tables as $table) {
@@ -106,17 +122,17 @@
 
     $result = $pdo->query("SELECT * FROM $selectedTable");
     echo "<table border='1'>";
-    // Output table header
+    
     echo "<tr>";
     if ($result->rowCount() > 0) {
         $row = $result->fetch(PDO::FETCH_ASSOC);
         foreach ($row as $key => $value) {
             echo "<th>$key</th>";
         }
-        echo "<th>Action</th>";  // Add a column for the delete button
+        echo "<th>Supprimer</th>";  
+        echo "<th>Modifier</th>";  
         echo "</tr>";
 
-        // Output data
         $result->execute();
         while ($row = $result->fetch(PDO::FETCH_ASSOC)) {
             echo "<tr>";
@@ -128,13 +144,14 @@
             foreach ($row as $key => $value) {
                 echo "<input type='hidden' name='$key' value='$value'>";
             }
-            echo "<input type='submit' value='Delete'></form></td>"; 
-            echo "<td><form method='post' action='edit.php'>";
+            echo "<input type='submit' value='Supprimer'></form></td>"; 
+            //echo "<td><form method='post' action='edit.php'>";
             echo "<input type='hidden' name='table' value='$selectedTable'>";
-            foreach ($row as $key => $value) {
-                echo "<input type='hidden' name='$key' value='$value'>";
-            }
-            echo "<input type='submit' value='Edit'></form></td>";
+            // foreach ($row as $key => $value) {
+            //     echo "<input type='hidden' name='$key' value='$value'>";
+            // }
+            // echo "<input type='submit' value='Modifier'>";
+            echo "<td><button onclick='openModifyPopup(" . json_encode($row) . ")'>Modify</button></form></td>";
             echo "</tr>";
         }
 
@@ -146,6 +163,5 @@
     echo "</table>";   
     exit();   
     ?>
-
 </body>
 </html>
