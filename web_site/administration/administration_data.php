@@ -8,7 +8,7 @@
     // } 
 
     $tables = ['auteur', 'livre', 'ecrit'];
-    // Function to sanitize user input
+    
     function sanitizeInput($data) {
         return htmlspecialchars(stripslashes(trim($data)));
     };
@@ -76,17 +76,19 @@
 
     <script>
         function openModifyPopup(data) {
-            var popup = window.open("", "Modify Row", "width=400,height=400");
-            popup.document.write("<h2>Modify Row</h2>");
+            
+            var popup = window.open("", "Modifier Element", "width=400,height=400");
+            popup.document.write("<h2>Modifier Element</h2>");
             popup.document.write("<form method='post' action='edit.php'>");
-            popup.document.write("<input type='hidden' name='table' value='" + data['table'] + "'>");
+            popup.document.write("<input type='text' name='table' value='" + data['table'] + "'><br>");
             for (var key in data) {
                 popup.document.write("<label>" + key + ":</label>");
                 popup.document.write("<input type='text' name='" + key + "' value='" + data[key] + "'><br>");
             }
-            popup.document.write("<input type='submit' value='Modify'></form>");
+            popup.document.write("<input type='submit' value='Modifier'></form>");
         }
     </script>
+
 
 
     <h2>Selection de la table</h2>
