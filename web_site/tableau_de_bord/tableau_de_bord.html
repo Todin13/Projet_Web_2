@@ -4,126 +4,137 @@
     <meta charset="UTF-8">
     <title>Dashboard Administrateur</title>
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
-    <link href= tableau_de_bords.css rel= stylesheet>
+    <link rel="stylesheet" type="text/css" href="tableau_de_bord.css">
 </head>
 <body>
     <h1>Dashboard de la Bibliothèque</h1>
-    <canvas id="graphiqueLivresParDomaine"></canvas>
-
+    <div style="width: 80%; margin: auto;">
+        <canvas id="barplotLivresParDomaine"></canvas>
+    </div>
+    
     <script>
-        fetch('fichiers_php/livres_domaines.php').then(response => {
-            return response.json();
-        }).then(data => {
-            const labels = data.map(item => item.Domaine);
-            const values = data.map(item => item.NombreDeLivres);
-
-            const ctx = document.getElementById('graphiqueLivresParDomaine').getContext('2d');
-            new Chart(ctx, {
-                type: 'bar',
-                data: {
-                    labels: labels,
-                    datasets: [{
-                        label: 'Nombre de Livres',
-                        data: values,
-                        backgroundColor: 'rgba(0, 123, 255, 0.5)',
-                        borderColor: 'rgba(0, 123, 255, 1)',
-                        borderWidth: 1
-                    }]
-                },
-                options: {
-                    scales: {
-                        y: {
-                            beginAtZero: true
+    document.addEventListener('DOMContentLoaded', function () {
+        // Récupérer les données depuis le fichier PHP
+        fetch('chemin_vers_votre_fichier_php.php')
+            .then(response => response.json())
+            .then(data => {
+                // Préparer les données pour le barplot
+                const domaines = Object.keys(data);
+                const nombreLivres = Object.values(data);
+    
+                // Créer le contexte du canvas
+                const ctx = document.getElementById('barplotLivresParDomaine').getContext('2d');
+    
+                // Créer le barplot
+                new Chart(ctx, {
+                    type: 'bar',
+                    data: {
+                        labels: domaines,
+                        datasets: [{
+                            label: 'Nombre de Livres',
+                            data: nombreLivres,
+                            backgroundColor: 'rgba(75, 192, 192, 0.2)', // Couleur de fond des barres
+                            borderColor: 'rgba(75, 192, 192, 1)', // Couleur de la bordure des barres
+                            borderWidth: 1 // Largeur de la bordure des barres
+                        }]
+                    },
+                    options: {
+                        scales: {
+                            y: {
+                                beginAtZero: true
+                            }
                         }
                     }
-                }
-            });
-        }).catch(error => {
-            console.error('Erreur lors de la récupération des données:', error);
-        });
+                });
+            })
+            .catch(error => console.error('Erreur lors de la récupération des données:', error));
+    });
     </script>
 
-    <canvas id="graphiquePublicationsParAuteur"></canvas>
-
+    <div style="width: 80%; margin: auto;">
+        <canvas id="barplotLivresParAuteur"></canvas>
+    </div>
+    
     <script>
-        fetch('fichiers_php/publi_auteurs.php').then(response => response.json()).then(data => {
-            const labels = data.map(item => item.Nom + ' ' + item.Prenom);
-            const values = data.map(item => item.NombreDeLivres);
-
-            new Chart(document.getElementById('graphiquePublicationsParAuteur').getContext('2d'), {
-                type: 'bar',
-                data: {
-                    labels: labels,
-                    datasets: [{ 
-                        label: 'Nombre de publications',
-                        data: values,
-                        backgroundColor: 'rgba(75, 192, 192, 0.2)',
-                        borderColor: 'rgba(75, 192, 192, 1)',
-                        borderWidth: 1
-                    }]
-                }
-            });
-        });
+    document.addEventListener('DOMContentLoaded', function () {
+        // Récupérer les données depuis le fichier PHP
+        fetch('chemin_vers_votre_fichier_php.php')
+            .then(response => response.json())
+            .then(data => {
+                // Préparer les données pour le barplot
+                const auteurs = Object.keys(data);
+                const nombreLivres = Object.values(data);
+    
+                // Créer le contexte du canvas
+                const ctx = document.getElementById('barplotLivresParAuteur').getContext('2d');
+    
+                // Créer le barplot
+                new Chart(ctx, {
+                    type: 'bar',
+                    data: {
+                        labels: auteurs,
+                        datasets: [{
+                            label: 'Nombre de Livres',
+                            data: nombreLivres,
+                            backgroundColor: 'rgba(75, 192, 192, 0.2)', // Couleur de fond des barres
+                            borderColor: 'rgba(75, 192, 192, 1)', // Couleur de la bordure des barres
+                            borderWidth: 1 // Largeur de la bordure des barres
+                        }]
+                    },
+                    options: {
+                        scales: {
+                            y: {
+                                beginAtZero: true
+                            }
+                        }
+                    }
+                });
+            })
+            .catch(error => console.error('Erreur lors de la récupération des données:', error));
+    });
     </script>
 
-    <canvas id="graphiqueLivresAjoutes"></canvas>
-
+    <div style="width: 80%; margin: auto;">
+        <canvas id="pieChartAuteursParNationalite"></canvas>
+    </div>
+    
     <script>
-        fetch('fichiers_php/livres_ajouter.php').then(response => response.json()).then(data => {
-            const labels = data.map(item => item.Mois);
-            const values = data.map(item => item.NombreDeLivres);
-
-            new Chart(document.getElementById('graphiqueLivresAjoutes').getContext('2d'), {
-                type: 'line',
-                data: {
-                    labels: labels,
-                    datasets: [{ 
-                        label: 'Livres ajoutés par mois',
-                        data: values,
-                        backgroundColor: 'rgba(255, 99, 132, 0.2)',
-                        borderColor: 'rgba(255, 99, 132, 1)',
-                        borderWidth: 1
-                    }]
-                }
-            });
-        });
-    </script>
-
-    <canvas id="graphiqueAuteursParNationalite"></canvas>
-
-    <script>
-        fetch('fichiers_php/auteurs_natio.php').then(response => response.json()).then(data => {
-            const labels = data.map(item => item.Nationalite);
-            const values = data.map(item => item.NombreDAuteurs);
-
-            new Chart(document.getElementById('graphiqueAuteursParNationalite').getContext('2d'), {
-                type: 'pie',
-                data: {
-                    labels: labels,
-                    datasets: [{ 
-                        label: 'Nombre d\'auteurs',
-                        data: values,
-                        backgroundColor: [
-                            'rgba(255, 99, 132, 0.2)',
-                            'rgba(54, 162, 235, 0.2)',
-                            'rgba(255, 206, 86, 0.2)',
-                            'rgba(75, 192, 192, 0.2)',
-                            'rgba(153, 102, 255, 0.2)',
-                            'rgba(255, 159, 64, 0.2)'
-                        ],
-                        borderColor: [
-                            'rgba(255, 99, 132, 1)',
-                            'rgba(54, 162, 235, 1)',
-                            'rgba(255, 206, 86, 1)',
-                            'rgba(75, 192, 192, 1)',
-                            'rgba(153, 102, 255, 1)',
-                            'rgba(255, 159, 64, 1)'
-                        ],
-                        borderWidth: 1
-                    }]
-                }
-            });
-        });
+    document.addEventListener('DOMContentLoaded', function () {
+        // Récupérer les données depuis le fichier PHP
+        fetch('chemin_vers_votre_fichier_php.php')
+            .then(response => response.json())
+            .then(data => {
+                // Préparer les données pour le pie chart
+                const nationalites = Object.keys(data);
+                const nombreAuteurs = Object.values(data);
+    
+                // Créer le contexte du canvas
+                const ctx = document.getElementById('pieChartAuteursParNationalite').getContext('2d');
+    
+                // Créer le pie chart
+                new Chart(ctx, {
+                    type: 'pie',
+                    data: {
+                        labels: nationalites,
+                        datasets: [{
+                            data: nombreAuteurs,
+                            backgroundColor: [
+                                'rgba(255, 99, 132, 0.7)',
+                                'rgba(54, 162, 235, 0.7)',
+                                'rgba(255, 206, 86, 0.7)',
+                                'rgba(75, 192, 192, 0.7)',
+                                'rgba(153, 102, 255, 0.7)',
+                                'rgba(255, 159, 64, 0.7)',
+                                'rgba(128, 128, 128, 0.7)',
+                                // Vous pouvez ajouter plus de couleurs si nécessaire
+                            ],
+                            borderWidth: 1
+                        }]
+                    }
+                });
+            })
+            .catch(error => console.error('Erreur lors de la récupération des données:', error));
+    });
     </script>
 </body>
 </html>

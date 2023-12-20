@@ -1,32 +1,34 @@
 <?php
-// Paramètres de connexion à la base de données
-$host = 'localhost';
-$db   = 'bibliotheque_ia';
-$user = 'utilisateur';
-$pass = 'mot_de_passe';
-$charset = 'utf8mb4';
+// Connexion à la base de données
+$serveur = "localhost";
+$utilisateur = "votre_utilisateur";
+$mot_de_passe = "votre_mot_de_passe";
+$base_de_donnees = "bibliotheque_ia";
 
-// DSN (Data Source Name)
-$dsn = "mysql:host=$host;dbname=$db;charset=$charset";
-$options = [
-    PDO::ATTR_ERRMODE            => PDO::ERRMODE_EXCEPTION,
-    PDO::ATTR_DEFAULT_FETCH_MODE => PDO::FETCH_ASSOC,
-    PDO::ATTR_EMULATE_PREPARES   => false,
-];
+$connexion = new mysqli($serveur, $utilisateur, $mot_de_passe, $base_de_donnees);
 
-try {
-    $pdo = new PDO($dsn, $user, $pass, $options);
-} catch (\PDOException $e) {
-    throw new \PDOException($e->getMessage(), (int)$e->getCode());
+// Vérifier la connexion
+if ($connexion->connect_error) {
+    die("Échec de la connexion à la base de données : " . $connexion->connect_error);
 }
 
-// Requête SQL pour compter le nombre de livres par domaine
-$sql = "SELECT Domaine, COUNT(*) as NombreDeLivres FROM Livre GROUP BY Domaine";
-$stmt = $pdo->query($sql);
+// Fonction pour récupérer le nombre de livres par domaine
+function getNombreLivresParDomaine($domaine) {
+    global $connexion;
 
-$livresParDomaine = $stmt->fetchAll();
+    $domaine = $connexion->real_escape_string($domaine);
 
-// Renvoyer les résultats en format JSON
-header('Content-Type: application/json');
-echo json_encode($livresParDomaine);
+    $requete = "SELECT COUNT(*) AS nombreLivres FROM Livre WHERE Domaine = '$domaine'";
+    $resultat = $connexion->query($requete);
+
+    if ($resultat) {
+        $row = $resultat->fetch_assoc();
+        return $row['nombreLivres'];
+    } else {
+        return 0; // Erreur dans la requête
+    }
+}
+
+// Fermer la connexion à la base de données
+$connexion->close();
 ?>
