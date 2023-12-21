@@ -9,8 +9,7 @@
     if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST['table'])) {
         $table = $_POST['table'];
         
-        $tableName = $_SESSION['selectedTable'];
-        $sql = "SHOW KEYS FROM $tableName WHERE Key_name = 'PRIMARY'";
+        $sql = "SHOW KEYS FROM $table WHERE Key_name = 'PRIMARY'";
         $stmt = $pdo->query($sql);
     
         $row = $stmt->fetch(PDO::FETCH_ASSOC);
