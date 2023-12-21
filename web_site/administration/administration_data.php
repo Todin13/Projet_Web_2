@@ -79,6 +79,7 @@
         function openModifyPopup(data) {
             
             var popup = window.open("", "Modifier un element de '" + data['table'] + "'", "width=400,height=400");
+            popup.document.write('<link rel="stylesheet" href="administration_data.css">')
             popup.document.write("<h2>Modifier un element de '" + data['table'] + "'</h2>");
             popup.document.write("<form method='post' action='edit.php'>");
             popup.document.write("<input type='hidden' name='table' value='" + data['table'] + "'><br>");
