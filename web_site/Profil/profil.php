@@ -63,6 +63,6 @@ if ($user = $stmt->fetch(PDO::FETCH_ASSOC)) {
         <button type="submit">Update Information</button>
     </form>
 
-    <a href="logout.php">Logout</a>
+    <a href="../logout.php">Logout</a>
 </body>
 </html>
