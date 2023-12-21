@@ -24,7 +24,7 @@
         $updateData = [];
         foreach ($_POST as $key => $value) {
             if ($key === $primaryKeyName) {
-                $whereClause = 'WHERE ' . $primaryKeyName . '=' . $value;
+                $whereClause = 'WHERE ' . $primaryKeyName . '=' . sanitizeInput($value);
             } elseif ($key !== 'table') {
                 $updateData[$key] = sanitizeInput($value);
             }
