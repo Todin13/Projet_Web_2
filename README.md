@@ -9,7 +9,7 @@
 
 ### Contributions :
 
-#### [ODIN Thomas](https://github.com/Todin13] :
+#### [ODIN Thomas](https://github.com/Todin13) :
 - Archi projet
 - Index.php
 - Administration de la base de données via le site web (php et css)
