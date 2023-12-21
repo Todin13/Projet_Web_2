@@ -77,8 +77,8 @@
     <script>
         function openModifyPopup(data) {
             
-            var popup = window.open("", "Modifier Element" , "width=400,height=400");
-            popup.document.write("<h2>Modifier Element</h2>");
+            var popup = window.open("", "Modifier un element de '" + data['table'] + "'", "width=400,height=400");
+            popup.document.write("<h2>Modifier un element de '" + data['table'] + "'</h2>");
             popup.document.write("<form method='post' action='edit.php'>");
             popup.document.write("<input type='hidden' name='table' value='" + data['table'] + "'><br>");
             <?php 
@@ -96,7 +96,8 @@
             for (var key in data) {
                 if (key === primaryKey) {
                     popup.document.write("<label>" + key + ":</label>");
-                    popup.document.write("<label name='" + key + "'>'" + data[key] + "'</label><br>");
+                    popup.document.write("<input type='hidden' name='" + key + "' value='" + data[key] + "'>");
+                    popup.document.write("<label>" + data[key] + "'</label><br>");
                 }
                 else if (key !== 'table') {
                     popup.document.write("<label>" + key + ":</label>");
