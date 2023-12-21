@@ -17,6 +17,7 @@
 #### [Laumonier Quentin](https://github.com/OYama1909) :
 - Création base de donnée
 - Création du Dashboard
+- Créeation navbar
 
 #### [Gianluca Schileo](https://github.com/Gianluca-Schileo) :
 - Home page (php & css)
