@@ -2,14 +2,30 @@
 session_start();
 include('../connect_db/db.php');
 
-// Check if the user is logged in
 if (!isset($_SESSION['AdminID'])) {
-    header('Location: ../authentification/authentification.php'); // Redirect to login page if not logged in
+    header('Location: ../authentification/authentification.php');
     exit();
 }
 
-// Retrieve user information from the database
 $adminId = $_SESSION['AdminID'];
+
+// Check if the form is submitted for updating user information
+if ($_SERVER['REQUEST_METHOD'] === 'POST') {
+    $newNom = $_POST['newNom'];
+    $newEmail = $_POST['newEmail'];
+    $newTel = $_POST['newTel'];
+
+    // Update user information in the database
+    $updateQuery = "UPDATE Admin SET Nom = :newNom, Email = :newEmail, Tel = :newTel WHERE AdminId = :adminId";
+    $updateStmt = $pdo->prepare($updateQuery);
+    $updateStmt->bindParam(':newNom', $newNom, PDO::PARAM_STR);
+    $updateStmt->bindParam(':newEmail', $newEmail, PDO::PARAM_STR);
+    $updateStmt->bindParam(':newTel', $newTel, PDO::PARAM_STR);
+    $updateStmt->bindParam(':adminId', $adminId, PDO::PARAM_INT);
+    $updateStmt->execute();
+}
+
+// Retrieve updated user information from the database
 $query = "SELECT * FROM Admin WHERE AdminId = :adminId";
 $stmt = $pdo->prepare($query);
 $stmt->bindParam(':adminId', $adminId, PDO::PARAM_INT);
@@ -20,7 +36,6 @@ if ($user = $stmt->fetch(PDO::FETCH_ASSOC)) {
     $email = $user['Email'];
     $tel = $user['Tel'];
 } else {
-    // Handle the case where user data is not found (this should not happen if authentication is successful)
     die("Error retrieving user information");
 }
 ?>
@@ -30,16 +45,24 @@ if ($user = $stmt->fetch(PDO::FETCH_ASSOC)) {
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="profile_test.css">
+    <link rel="stylesheet" href="profil.css">
     <title>Profile</title>
 </head>
 <body>
     <h1>Welcome, <?php echo $nom; ?>!</h1>
-    <p>Email: <?php echo $email; ?></p>
-    <p>Phone: <?php echo $tel; ?></p>
+    <form method="POST" action="">
+        <label for="newNom">Name:</label>
+        <input type="text" id="newNom" name="newNom" value="<?php echo $nom; ?>" required><br>
 
-    <!-- Add any additional information you want to display -->
+        <label for="newEmail">Email:</label>
+        <input type="email" id="newEmail" name="newEmail" value="<?php echo $email; ?>" required><br>
 
-    <a href="logout.php">Logout</a> <!-- Add a logout link -->
+        <label for="newTel">Phone:</label>
+        <input type="tel" id="newTel" name="newTel" value="<?php echo $tel; ?>" required><br>
+
+        <button type="submit">Update Information</button>
+    </form>
+
+    <a href="logout.php">Logout</a>
 </body>
 </html>
