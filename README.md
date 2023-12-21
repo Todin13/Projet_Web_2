@@ -16,6 +16,7 @@
 #### Odin Thomas :
 - Archi projet
 - Index.php
+- Administration de la base de données via le site web (php et css)
 
 #### Catez Benoît :
 - Diagram Database
