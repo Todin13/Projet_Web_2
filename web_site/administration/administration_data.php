@@ -107,6 +107,12 @@
             }
             popup.document.write("<input type='submit' value='Modifier'></form>");
         };
+
+  
+        function confirmDelete() {
+            return confirm("Êtes vous sur de vouloir supprimer cet element ?");
+        };
+
     </script>
 
 
@@ -162,14 +168,15 @@
             foreach ($row as $value) {
                 echo "<td>$value</td>";
             }
-            echo "<td><form method='post' action='delete.php'>";  
+            echo "<td><form method='post' action='delete.php' onsubmit='return confirmDelete()'>";  
             echo "<input type='hidden' name='table' value='$selectedTable'>";
             foreach ($row as $key => $value) {
                 echo "<input type='hidden' name='$key' value='$value'>";
             }
             echo "<input type='submit' value='Supprimer'></form></td>"; 
+
             echo "<td><input type='hidden' name='table' value='$selectedTable'>";
-             foreach ($row as $key => $value) {
+            foreach ($row as $key => $value) {
                  echo "<input type='hidden' name='$key' value='$value'>";
             }
             echo "<input type='submit' onclick='openModifyPopup(" . json_encode(['table' => $selectedTable] + $row) . ")' value='Modifier'></td>";
