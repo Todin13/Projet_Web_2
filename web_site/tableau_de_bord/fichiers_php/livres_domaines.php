@@ -1,33 +1,35 @@
 <?php
-// Connexion à la base de données
-$serveur = "localhost";
-$utilisateur = "votre_utilisateur";
-$mot_de_passe = "votre_mot_de_passe";
-$base_de_donnees = "bibliotheque_ia";
+session_start();
+include("../../connect_db/db.php");
 
-$connexion = new mysqli($serveur, $utilisateur, $mot_de_passe, $base_de_donnees);
-
-// Vérifier la connexion
-if ($connexion->connect_error) {
-    die("Échec de la connexion à la base de données : " . $connexion->connect_error);
-}
+// Indiquer que le contenu est du type JSON
+header('Content-Type: application/json');
 
 // Fonction pour récupérer le nombre de livres par domaine
-function getNombreLivresParDomaine($domaine) {
-    global $connexion;
+function getNombreLivresParDomaines() {
+    global $pdo;
 
-    $domaine = $connexion->real_escape_string($domaine);
+    try {
+        $requete = "SELECT Domaine, COUNT(*) AS nombreLivres FROM Livre GROUP BY Domaine";
+        $resultat = $pdo->query($requete);
 
-    $requete = "SELECT COUNT(*) AS nombreLivres FROM Livre WHERE Domaine = '$domaine'";
-    $resultat = $connexion->query($requete);
+        $livresParDomaines = array();
 
-    if ($resultat) {
-        $row = $resultat->fetch_assoc();
-        return $row['nombreLivres'];
-    } else {
-        return 0; // Erreur dans la requête
+        while ($row = $resultat->fetch(PDO::FETCH_ASSOC)) {
+            $domaine = $row['Domaine'];
+            $livresParDomaines[$domaine] = $row['nombreLivres'];
+        }
+
+        return $livresParDomaines;
+    } catch (PDOException $e) {
+        die("Erreur lors de l'exécution de la requête : " . $e->getMessage());
     }
 }
+
+// Appeler la fonction et renvoyer les données au format JSON
+$data = getNombreLivresParDomaines();
+echo json_encode($data);
+exit;
 
 // Fermer la connexion à la base de données
 $connexion->close();

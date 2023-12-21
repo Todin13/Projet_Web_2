@@ -1,41 +1,39 @@
 <?php
-// Connexion à la base de données
-$serveur = "localhost";
-$utilisateur = "votre_utilisateur";
-$mot_de_passe = "votre_mot_de_passe";
-$base_de_donnees = "bibliotheque_ia";
+session_start();
+include("../../connect_db/db.php");
 
-$connexion = new mysqli($serveur, $utilisateur, $mot_de_passe, $base_de_donnees);
-
-// Vérifier la connexion
-if ($connexion->connect_error) {
-    die("Échec de la connexion à la base de données : " . $connexion->connect_error);
-}
+// Indiquer que le contenu est du type JSON
+header('Content-Type: application/json');
 
 // Fonction pour récupérer le nombre de livres par auteur
 function getNombreLivresParAuteur() {
-    global $connexion;
+    global $pdo;
 
-    $requete = "SELECT Auteur.Nom, Auteur.Prenom, COUNT(Ecrit.ISSN) AS NombreLivres
-                FROM Auteur
-                LEFT JOIN Ecrit ON Auteur.Num = Ecrit.Num
-                GROUP BY Auteur.Num";
-    
-    $resultat = $connexion->query($requete);
+    try {
+        $requete = "SELECT Auteur.Nom, Auteur.Prenom, COUNT(Ecrit.ISSN) AS NombreLivres
+                    FROM Auteur
+                    LEFT JOIN Ecrit ON Auteur.Num = Ecrit.Num
+                    GROUP BY Auteur.Num";
 
-    if ($resultat) {
+        $resultat = $pdo->query($requete);
+
         $livresParAuteur = array();
 
-        while ($row = $resultat->fetch_assoc()) {
+        while ($row = $resultat->fetch(PDO::FETCH_ASSOC)) {
             $nomComplet = $row['Nom'] . ' ' . $row['Prenom'];
             $livresParAuteur[$nomComplet] = $row['NombreLivres'];
         }
 
         return $livresParAuteur;
-    } else {
-        return null; // Erreur dans la requête
+    } catch (PDOException $e) {
+        die("Erreur lors de l'exécution de la requête : " . $e->getMessage());
     }
 }
+
+// Appeler la fonction et renvoyer les données au format JSON
+$data = getNombreLivresParAuteur();
+echo json_encode($data);
+exit;
 
 // Fermer la connexion à la base de données
 $connexion->close();
