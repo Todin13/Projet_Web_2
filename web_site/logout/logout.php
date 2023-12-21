@@ -5,6 +5,6 @@ $_SESSION = array();
 
 session_destroy();
 
-header('Location: ../web_site/home/home.php');
+header('Location: ../home/home.php');
 exit();
 ?>
