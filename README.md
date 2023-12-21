@@ -23,4 +23,5 @@
 
 #### [Catez Benoît](https://github.com/LimuleSempai) :
 - Diagram Database
-- Authentification.php/css
+- Authentification (php et css)
+- profil (php et css)
