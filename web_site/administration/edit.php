@@ -4,50 +4,46 @@
 
     function sanitizeInput($data) {
         return htmlspecialchars(stripslashes(trim($data)));
-    }
+    };
 
     if ($_SERVER["REQUEST_METHOD"] == "POST") {
-        $selectedTable = sanitizeInput($_POST["table"]);
-
-        // Validate and sanitize other form inputs as needed
-        // ...
-
-        // Construct the UPDATE query based on the selected table and form data
-        $updateQuery = "UPDATE $selectedTable SET ";
-        foreach ($_POST as $key => $value) {
-            
-            if ($key !== 'table') {
-                $updateQuery .= "$key = :$key, ";
-            }
-        } 
-
-        $updateQuery = rtrim($updateQuery, ', ');
-
-        $updateQuery .= " WHERE ";
+        $table = $_POST['table'];
+        
+        // Récupérer les colonnes et les valeurs modifiées
+        $updateData = [];
         foreach ($_POST as $key => $value) {
             if ($key !== 'table') {
-                $updateQuery .= "$key = :$key AND ";
-            }
-        } 
-
-        $updateQuery = rtrim($updateQuery, 'AND ');
-
-        $stmt = $pdo->prepare($updateQuery);
-        foreach ($_POST as $key => $value) {
-            
-            if ($key !== 'table') {
-                $stmt->bindValue(":$key", sanitizeInput($value));
+                $updateData[$key] = sanitizeInput($value);
             }
         }
 
-        if ($stmt->execute()) {
-            echo "Data updated successfully.";
+        // Construire la clause SET de la requête UPDATE
+        $setClause = '';
+        foreach ($updateData as $key => $value) {
+            $setClause .= "`$key` = :$key, ";
+        }
+        $setClause = rtrim($setClause, ', ');
+
+        // Vérifier s'il y a une condition WHERE (par exemple, si tu as besoin d'identifier la ligne spécifique)
+        $whereClause = ''; // Remplace cela avec ta propre logique de condition WHERE si nécessaire
+
+        // Construire la requête SQL
+        $query = "UPDATE `$table` SET $setClause $whereClause";
+
+        // Préparer et exécuter la requête
+        $stmt = $pdo->prepare($query);
+        foreach ($updateData as $key => $value) {
+            $stmt->bindValue(":$key", $value);
+        }
+
+        $success = $stmt->execute();
+
+        if ($success) {
+            echo "Modification réussie!";
         } else {
-            echo "Error updating data.";
+            echo "Erreur lors de la modification.";
         }
     } else {
-
-        header('Location: index.php');
-        exit();
+        echo "Accès non autorisé.";
     }
 ?>

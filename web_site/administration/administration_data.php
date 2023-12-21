@@ -77,16 +77,19 @@
     <script>
         function openModifyPopup(data) {
             
-            var popup = window.open("", "Modifier Element", "width=400,height=400");
+            var popup = window.open("", "Modifier Element" , "width=400,height=400");
             popup.document.write("<h2>Modifier Element</h2>");
             popup.document.write("<form method='post' action='edit.php'>");
-            popup.document.write("<input type='text' name='table' value='" + data['table'] + "'><br>");
+            popup.document.write("<input type='hidden' name='table' value='" + data['table'] + "'><br>");
             for (var key in data) {
-                popup.document.write("<label>" + key + ":</label>");
-                popup.document.write("<input type='text' name='" + key + "' value='" + data[key] + "'><br>");
+                if (key !== 'table') {
+                    popup.document.write("<label>" + key + ":</label>");
+                    popup.document.write("<input type='text' name='" + key + "' value='" + data[key] + "'><br>");
+                }
+                
             }
             popup.document.write("<input type='submit' value='Modifier'></form>");
-        }
+        };
     </script>
 
 
@@ -151,7 +154,7 @@
              foreach ($row as $key => $value) {
                  echo "<input type='hidden' name='$key' value='$value'>";
             }
-            echo "<input type='submit' onclick='openModifyPopup(" . json_encode($row) . ")' value='Modifier'></td>";
+            echo "<input type='submit' onclick='openModifyPopup(" . json_encode(['table' => $selectedTable] + $row) . ")' value='Modifier'></td>";
             echo "</tr>";
         }
 
