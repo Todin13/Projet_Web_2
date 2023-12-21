@@ -81,8 +81,24 @@
             popup.document.write("<h2>Modifier Element</h2>");
             popup.document.write("<form method='post' action='edit.php'>");
             popup.document.write("<input type='hidden' name='table' value='" + data['table'] + "'><br>");
+            <?php 
+                $tableName = $_SESSION['selectedTable'] ; 
+                $sql = "SHOW KEYS FROM $tableName WHERE Key_name = 'PRIMARY'";
+                $stmt = $pdo->query($sql);
+
+                $row = $stmt->fetch(PDO::FETCH_ASSOC);
+
+                if ($row) {
+                    $primaryKeyName = $row['Column_name'];
+                    echo "var primaryKey = '$primaryKeyName';";
+                }
+            ?>
             for (var key in data) {
-                if (key !== 'table') {
+                if (key === primaryKey) {
+                    popup.document.write("<label>" + key + ":</label>");
+                    popup.document.write("<label name='" + key + "'>'" + data[key] + "'</label><br>");
+                }
+                else if (key !== 'table') {
                     popup.document.write("<label>" + key + ":</label>");
                     popup.document.write("<input type='text' name='" + key + "' value='" + data[key] + "'><br>");
                 }
@@ -118,7 +134,8 @@
         $selectedTable = $_SESSION['selectedTable']; 
     } 
     else {
-         $selectedTable = $defaultTable;
+        $_SESSION['selectedTable'] = $defaultTable;
+        $selectedTable = $defaultTable;
     }
 
     echo generateInputFields($selectedTable);
