@@ -15,7 +15,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
     if ($user = $stmt->fetch(PDO::FETCH_ASSOC)) {
         $_SESSION['AdminID'] = $user['AdminId'];
-        header('Location: dashboard.php');
+        header('Location: ../tableau_de_bord/tableau_de_bord.php');
         exit();
     } else {
         $error_message = 'Identifiants incorrects';
