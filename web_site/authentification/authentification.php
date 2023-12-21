@@ -60,12 +60,12 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             function changer(){
                 if(e){
                     document.getElementById("pass").setAttribute("type","text");
-                    document.getElementById("eye").src="images/green_eye.png";
+                    document.getElementById("eye").src="../images/green_eye.png";
                     e=false;
                 }
                 else{
                     document.getElementById("pass").setAttribute("type","Password");
-                    document.getElementById("eye").src="images/red_eye.png";
+                    document.getElementById("eye").src="../images/red_eye.png";
                     e=true
                 }
             }

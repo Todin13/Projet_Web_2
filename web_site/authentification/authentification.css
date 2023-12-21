@@ -94,3 +94,8 @@
     transform: translateX(600px);
     transition-duration: .5s;
   }  
+
+  #eye{
+    width: 5px;
+    height: 5px;
+  }
