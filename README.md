@@ -11,6 +11,7 @@
 
 #### Laumonier Quentin :
 - Création base de donnée
+- Création du Dashboard
 
 #### Odin Thomas :
 - Archi projet
