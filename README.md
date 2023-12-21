@@ -7,14 +7,21 @@
 
 
 
-### Contributions
+### Contributions :
 
-#### Laumonier Quentin :
-- Création base de donnée
-
-#### Odin Thomas :
+#### [ODIN Thomas](https://github.com/Todin13) :
 - Archi projet
 - Index.php
+- Administration de la base de données via le site web (php et css)
 
-#### Catez Benoît :
+#### [Laumonier Quentin](https://github.com/OYama1909) :
+- Création base de donnée
+- Création du Dashboard
+
+#### [Gianluca Schileo](https://github.com/Gianluca-Schileo) :
+- Home page (php & css)
+
+#### [Catez Benoît](https://github.com/LimuleSempai) :
 - Diagram Database
+- Authentification (php et css)
+- profil (php et css)

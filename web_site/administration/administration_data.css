@@ -1,0 +1,71 @@
+body {
+    font-family: 'Arial', sans-serif;
+    margin: 0;
+    padding: 0;
+    background-color: #f4f4f4;
+}
+
+.container {
+    display: flex;
+    max-width: 1200px;
+    margin: 20px auto;
+}
+
+.left-column {
+    flex: 1;
+    padding: 20px;
+    background-color: #fff;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+}
+
+.right-column {
+    flex: 2;
+    padding: 20px;
+    background-color: #fff;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+}
+
+form {
+    margin-bottom: 20px;
+}
+
+select, input, textarea {
+    width: 100%;
+    padding: 6px; /* Reduced padding */
+    margin-bottom: 10px;
+    box-sizing: border-box;
+}
+
+table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-top: 20px;
+}
+
+table, th, td {
+    border: 1px solid #ddd;
+}
+
+th, td {
+    padding: 6px; /* Reduced padding */
+    font-size: 12px; /* Reduced font size */
+    text-align: center; /* Center align text in cells */
+}
+
+th {
+    background-color: #f2f2f2;
+}
+
+input[type="submit"] {
+    background-color: #3498db; /* Changed color to a shade of blue */
+    color: white;
+    padding: 6px 15px; /* Adjusted padding */
+    border: none;
+    cursor: pointer;
+    display: block;
+    margin: auto; /* Center align */
+}
+
+input[type="submit"]:hover {
+    background-color: #2980b9; /* Darker shade on hover */
+}
