@@ -2,6 +2,11 @@
     session_start();
     include("../connect_db/db.php");
 
+    // if (!isset($_SESSION['username'])) {
+    //     header('Location: ../home/');
+    //     exit();
+    // }
+
     function sanitizeInput($data) {
         return htmlspecialchars(stripslashes(trim($data)));
     }
