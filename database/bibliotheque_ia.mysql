@@ -1,0 +1,35 @@
+CREATE TABLE Auteur (
+    Num INT AUTO_INCREMENT ,
+    Nom VARCHAR(15) NOT NULL,
+    Prenom VARCHAR(15) NOT NULL,
+    DateNaissance DATE,
+    Nationalite VARCHAR(100),
+    PRIMARY KEY (Num)
+);
+
+CREATE TABLE Livre (
+    ISSN VARCHAR(8),
+    Titre VARCHAR(255) NOT NULL,
+    Resume TEXT NOT NULL,
+    Nbpages INT NOT NULL,
+    Domaine VARCHAR(100) NOT NULL,
+    PRIMARY KEY (ISSN)
+);
+
+CREATE TABLE Ecrit (
+    Id INT AUTO_INCREMENT,
+    Num INT NOT NULL,
+    ISSN VARCHAR(50) NOT NULL,
+    FOREIGN KEY (Num) REFERENCES Auteur(Num),
+    FOREIGN KEY (ISSN) REFERENCES Livre(ISSN),
+    PRIMARY KEY (Id)
+);
+
+CREATE TABLE Admin (
+    AdminId INT AUTO_INCREMENT,
+    Nom VARCHAR(100) NOT NULL,
+    Email VARCHAR(100) NOT NULL,
+    MotDePasse VARCHAR(100) NOT NULL,
+    Tel VARCHAR(10) NOT NULL,
+    PRIMARY KEY (AdminId)
+);
