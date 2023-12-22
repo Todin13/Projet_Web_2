@@ -42,29 +42,6 @@
   <div class="absolute bottom-0 left-0">
     <p>Test</p>
   </div>
-
-  <?php
-    // Connect to the database
-    $host = "localhost";
-    $username = "root";
-    $password = ""; 
-    $dbname = "bibliotheque_ia";
-    // Create a PDO instance
-    $pdo = new PDO("mysql:host=$host;dbname=$dbname", $username, $password);
-    // Prepare an SQL query
-    $stmt = $pdo->prepare("SELECT * FROM mytable WHERE id = :id");
-    // Execute the query and bind a parameter
-    $stmt->execute([":id" => 1]);
-    // Fetch the result
-    $result = $stmt->fetch();
-    // Check for any errors in the execution
-    if ($stmt->errorCode() != 0) {
-        echo "An error occurred: " . $stmt->errorInfo()[2];
-    }
-    // Display the result
-    echo "ID: " . $result['id'] . " - Name: " . $result['name'] . '<br>';
-  ?>
-
 </body>
 
 </html>
