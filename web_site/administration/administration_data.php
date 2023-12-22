@@ -9,6 +9,9 @@
 
     $tables = ['auteur', 'livre', 'ecrit'];
     
+    $defaultTable = 'auteur';
+    $_SESSION['selectedTable'] = $defaultTable;
+    
     function sanitizeInput($data) {
         return htmlspecialchars(stripslashes(trim($data)));
     }
@@ -131,7 +134,6 @@
                 <input type="submit" value="Show Table">
             </form>
             <?php 
-                $defaultTable = 'auteur';
                 $selectedTable = '';
 
                 if ($_SERVER["REQUEST_METHOD"] == "POST") {
@@ -139,12 +141,10 @@
                     $_SESSION['selectedTable'] = $selectedTable; 
                 } elseif (isset($_SESSION['selectedTable'])) {
                     $selectedTable = $_SESSION['selectedTable']; 
-                } 
-                else {
-                    $_SESSION['selectedTable'] = $defaultTable;
-                    $selectedTable = $defaultTable;
+                } else {
+                    die('Problem in da session' + $_SESSION['selectedTable'] + '');
                 }
-
+                
                 echo generateInputFields($selectedTable);
             ?>
         </div>
