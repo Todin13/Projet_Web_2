@@ -23,7 +23,7 @@
             <a href="browse.html" class="py-2 px-3 text-white hover:text-gray-400 md:hover:bg-transparent md:hover:text-slate-300 md:p-0 dark:text-slate-300 dark:hover:text-sky-500">Browse</a>
           </li>
           <li>
-            <a href="login.html" class="py-2 px-3 text-white hover:text-gray-400 md:hover:bg-transparent md:hover:text-slate-300 md:p-0 dark:text-slate-300 dark:hover:text-sky-500">Login</a>
+            <a href="../authentification/authentification.php" class="py-2 px-3 text-white hover:text-gray-400 md:hover:bg-transparent md:hover:text-slate-300 md:p-0 dark:text-slate-300 dark:hover:text-sky-500">Login</a>
           </li>
         </ul>
       </div>
