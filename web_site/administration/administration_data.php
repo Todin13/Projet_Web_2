@@ -116,23 +116,48 @@
 
   
         function confirmDelete(data) {
-                // var inEcrit = False;
-                // var otherTable;
+            <?php
+                $tableName = $_SESSION['selectedTable'] ; 
+                $sql = "SHOW KEYS FROM $tableName WHERE Key_name = 'PRIMARY'";
+                $stmt = $pdo->query($sql);
 
-                // if (inEcrit === True) {
-                //     if (data['table'] === 'auteur') {
-                //         otherTable = (nbliaison === 1) ? 'livre' : 'livres';
-                //     } else if (data['table'] === 'livre') {
-                //         otherTable = (nbliaison === 1) ? 'auteur' : 'auteurs';
-                //     } else {
-                //         throw new Error("Problème avec l'accès aux tables");
-                //     }
-                //     liason = (data['table'] === 'auteur') ? 'cet' : 'ce';
-                //     return confirm("Etes vous sur de vouloir supprimer " + liason + " " + data['table'] + " alors qu'il est lié à " + nbliaison + " " + otherTable);
-                // } else {
-                    liason = (data['table'] === 'auteur') ? 'cet' : 'ce';
-                    return confirm("Etes vous sur de vouloir supprimer " + liason + " " + data['table']);
-               // }
+                $row = $stmt->fetch(PDO::FETCH_ASSOC);
+
+                if ($row) {
+                    $primaryKeyName = $row['Column_name'];
+                };
+
+                $query = "SELECT COUNT(*) FROM ecrit WHERE $primaryKeyName = :primaryKeyValue";
+                $statement = $pdo->prepare($query);
+                $statement->bindParam(':primaryKeyValue', $primaryKeyValue, PDO::PARAM_INT);
+                $statement->execute();
+                
+                $result = $statement->fetchColumn();
+
+                if ($result > 0) {
+                    echo 'var inEcrit = false;';
+                    echo "var nbliaison = '$result';";  
+                } else {
+                    echo 'var inEcrit = false;';
+                };                
+            ?>
+
+            var otherTable;
+
+            if (inEcrit) {
+                if (data['table'] === 'auteur') {
+                    otherTable = (nbliaison === 1) ? 'livre' : 'livres';
+                } else if (data['table'] === 'livre') {
+                    otherTable = (nbliaison === 1) ? 'auteur' : 'auteurs';
+                } else {
+                    throw new Error("Problème avec l'accès aux tables");
+                }
+                liason = (data['table'] === 'auteur') ? 'cet' : 'ce';
+                return confirm("Etes vous sur de vouloir supprimer " + liason + " " + data['table'] + " alors qu'il est lié à " + nbliaison + " " + otherTable);
+            } else {
+                liason = (data['table'] === 'auteur') ? 'cet' : 'ce';
+                return confirm("Etes vous sur de vouloir supprimer " + liason + " " + data['table']);
+            }
         };
 
     </script>
