@@ -81,9 +81,9 @@
 <script>
         function openModifyPopup(data) {
             
-            var popup = window.open("", "Modifier un element de '" + data['table'] + "'", "width=400,height=400");
+            var popup = window.open("", "Modifier un element de " + data['table'] , "width=400,height=400");
             popup.document.write('<link rel="stylesheet" href="popup.css">')
-            popup.document.write("<h2>Modifier un element de '" + data['table'] + "'</h2>");
+            popup.document.write("<h2>Modifier un element de " + data['table'] + "</h2>");
             popup.document.write("<form method='post' action='edit.php'>");
             popup.document.write("<input type='hidden' name='table' value='" + data['table'] + "'><br>");
             <?php 
@@ -113,8 +113,8 @@
         };
 
   
-        function confirmDelete() {
-            return confirm("Êtes vous sur de vouloir supprimer cet element ?");
+        function confirmDelete(data) {
+            return confirm("Etes vous sur de vouloir supprimer cet " + data['table'] );
         };
 
     </script>
@@ -172,7 +172,7 @@
                         foreach ($row as $value) {
                             echo "<td>$value</td>";
                         }
-                        echo "<td><form method='post' action='delete.php' onsubmit='return confirmDelete()'>";  
+                        echo "<td><form method='post' action='delete.php' onsubmit='return confirmDelete(" . json_encode(['table' => $selectedTable] + $row) . ")'>";  
                         echo "<input type='hidden' name='table' value='$selectedTable'>";
                         foreach ($row as $key => $value) {
                             echo "<input type='hidden' name='$key' value='$value'>";
