@@ -9,9 +9,11 @@
 
     $tables = ['auteur', 'livre', 'ecrit'];
     
-    $defaultTable = 'auteur';
-    $_SESSION['selectedTable'] = $defaultTable;
-    
+    if (!isset($_SESSION['selectedTable'])){
+        $defaultTable = 'auteur';
+        $_SESSION['selectedTable'] = $defaultTable;
+    }
+
     function sanitizeInput($data) {
         return htmlspecialchars(stripslashes(trim($data)));
     }
@@ -114,7 +116,23 @@
 
   
         function confirmDelete(data) {
-            return confirm("Etes vous sur de vouloir supprimer cet " + data['table'] );
+                // var inEcrit = False;
+                // var otherTable;
+
+                // if (inEcrit === True) {
+                //     if (data['table'] === 'auteur') {
+                //         otherTable = (nbliaison === 1) ? 'livre' : 'livres';
+                //     } else if (data['table'] === 'livre') {
+                //         otherTable = (nbliaison === 1) ? 'auteur' : 'auteurs';
+                //     } else {
+                //         throw new Error("Problème avec l'accès aux tables");
+                //     }
+                //     liason = (data['table'] === 'auteur') ? 'cet' : 'ce';
+                //     return confirm("Etes vous sur de vouloir supprimer " + liason + " " + data['table'] + " alors qu'il est lié à " + nbliaison + " " + otherTable);
+                // } else {
+                    liason = (data['table'] === 'auteur') ? 'cet' : 'ce';
+                    return confirm("Etes vous sur de vouloir supprimer " + liason + " " + data['table']);
+               // }
         };
 
     </script>
