@@ -120,37 +120,32 @@
             var xhttp = new XMLHttpRequest();
             xhttp.open("POST", "check_link_key.php", true);
             xhttp.setRequestHeader("Content-Type", "application/json");
+            
             xhttp.onreadystatechange = function() {
-            if (this.readyState == 4) {
-                if (this.status == 200) {
-                console.log(this.responseText);
-                } else {
-                console.error('Error:', this.status);
+                if (xhr.readyState == 4 && xhr.status == 200) {
+                    return confirm (xhr.responseText);
                 }
-            }
             };
         
             var jsonData = JSON.stringify(data);
             xhttp.send(jsonData);
 
-            
+            // var otherTable;
 
-            var otherTable;
-
-            if (inEcrit) {
-                if (data['table'] === 'auteur') {
-                    otherTable = (nbliaison === 1) ? 'livre' : 'livres';
-                } else if (data['table'] === 'livre') {
-                    otherTable = (nbliaison === 1) ? 'auteur' : 'auteurs';
-                } else {
-                    throw new Error("Problème avec l'accès aux tables");
-                }
-                liason = (data['table'] === 'auteur') ? 'cet' : 'ce';
-                return confirm("Etes vous sur de vouloir supprimer " + liason + " " + data['table'] + " alors qu'il est lié à " + nbliaison + " " + otherTable);
-            } else {
-                liason = (data['table'] === 'auteur') ? 'cet' : 'ce';
-                return confirm("Etes vous sur de vouloir supprimer " + liason + " " + data['table']);
-            }
+            // if (inEcrit) {
+            //     if (data['table'] === 'auteur') {
+            //         otherTable = (nbliaison === 1) ? 'livre' : 'livres';
+            //     } else if (data['table'] === 'livre') {
+            //         otherTable = (nbliaison === 1) ? 'auteur' : 'auteurs';
+            //     } else {
+            //         throw new Error("Problème avec l'accès aux tables");
+            //     }
+            //     liason = (data['table'] === 'auteur') ? 'cet' : 'ce';
+            //     return confirm("Etes vous sur de vouloir supprimer " + liason + " " + data['table'] + " alors qu'il est lié à " + nbliaison + " " + otherTable);
+            // } else {
+            //     liason = (data['table'] === 'auteur') ? 'cet' : 'ce';
+            //     return confirm("Etes vous sur de vouloir supprimer " + liason + " " + data['table']);
+            // }
         };
 
     </script>
@@ -208,8 +203,7 @@
                         foreach ($row as $value) {
                             echo "<td>$value</td>";
                         }
-                        //method='post' action='delete.php'
-                        echo "<td><form  onsubmit='return confirmDelete(" . json_encode(['table' => $selectedTable] + $row) . ")'>";  
+                        echo "<td><form method='post' action='delete.php' onsubmit='return confirmDelete(" . json_encode(['table' => $selectedTable] + $row) . ")'>";  
                         echo "<input type='hidden' name='table' value='$selectedTable'>";
                         foreach ($row as $key => $value) {
                             echo "<input type='hidden' name='$key' value='$value'>";
