@@ -125,21 +125,21 @@
 
                 if ($row) {
                     $primaryKeyName = $row['Column_name'];
+                    
+                    $query = "SELECT COUNT(*) FROM ecrit WHERE $primaryKeyName = :primaryKeyValue";
+                    $statement = $pdo->prepare($query);
+                    $statement->bindParam(':primaryKeyValue', $primaryKeyValue, PDO::PARAM_INT);
+                    $statement->execute();
+                    
+                    $result = $statement->fetchColumn();
+
+                    if ($result > 0) {
+                        echo 'var inEcrit = true;';
+                        echo "var nbliaison = '$result';";  
+                    } else {
+                        echo 'var inEcrit = false;';
+                    };      
                 };
-
-                $query = "SELECT COUNT(*) FROM ecrit WHERE $primaryKeyName = :primaryKeyValue";
-                $statement = $pdo->prepare($query);
-                $statement->bindParam(':primaryKeyValue', $primaryKeyValue, PDO::PARAM_INT);
-                $statement->execute();
-                
-                $result = $statement->fetchColumn();
-
-                if ($result > 0) {
-                    echo 'var inEcrit = false;';
-                    echo "var nbliaison = '$result';";  
-                } else {
-                    echo 'var inEcrit = false;';
-                };                
             ?>
 
             var otherTable;
