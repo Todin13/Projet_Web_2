@@ -128,6 +128,13 @@
                     
                     $query = "SELECT COUNT(*) FROM ecrit WHERE $primaryKeyName = :primaryKeyValue";
                     $statement = $pdo->prepare($query);
+
+                    foreach ($data as $key => $value) {
+                        if ($key === $primaryKeyName) {
+                            $primaryKeyValue = $value;
+                        } 
+                    }
+
                     $statement->bindParam(':primaryKeyValue', $primaryKeyValue, PDO::PARAM_INT);
                     $statement->execute();
                     
