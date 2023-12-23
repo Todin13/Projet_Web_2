@@ -116,38 +116,24 @@
 
   
         function confirmDelete(data) {
-            <?php
-                $tableName = $_SESSION['selectedTable'] ; 
-                $sql = "SHOW KEYS FROM $tableName WHERE Key_name = 'PRIMARY'";
-                $stmt = $pdo->query($sql);
 
-                $row = $stmt->fetch(PDO::FETCH_ASSOC);
+            var xhttp = new XMLHttpRequest();
+            xhttp.open("POST", "check_link_key.php", true);
+            xhttp.setRequestHeader("Content-Type", "application/json");
+            xhttp.onreadystatechange = function() {
+            if (this.readyState == 4) {
+                if (this.status == 200) {
+                console.log(this.responseText);
+                } else {
+                console.error('Error:', this.status);
+                }
+            }
+            };
+        
+            var jsonData = JSON.stringify(data);
+            xhttp.send(jsonData);
 
-                if ($row) {
-                    $primaryKeyName = $row['Column_name'];
-                    
-                    $query = "SELECT COUNT(*) FROM ecrit WHERE $primaryKeyName = :primaryKeyValue";
-                    $statement = $pdo->prepare($query);
-
-                    foreach ($data as $key => $value) {
-                        if ($key === $primaryKeyName) {
-                            $primaryKeyValue = $value;
-                        } 
-                    }
-
-                    $statement->bindParam(':primaryKeyValue', $primaryKeyValue, PDO::PARAM_INT);
-                    $statement->execute();
-                    
-                    $result = $statement->fetchColumn();
-
-                    if ($result > 0) {
-                        echo 'var inEcrit = true;';
-                        echo "var nbliaison = '$result';";  
-                    } else {
-                        echo 'var inEcrit = false;';
-                    };      
-                };
-            ?>
+            
 
             var otherTable;
 
@@ -222,7 +208,8 @@
                         foreach ($row as $value) {
                             echo "<td>$value</td>";
                         }
-                        echo "<td><form method='post' action='delete.php' onsubmit='return confirmDelete(" . json_encode(['table' => $selectedTable] + $row) . ")'>";  
+                        //method='post' action='delete.php'
+                        echo "<td><form  onsubmit='return confirmDelete(" . json_encode(['table' => $selectedTable] + $row) . ")'>";  
                         echo "<input type='hidden' name='table' value='$selectedTable'>";
                         foreach ($row as $key => $value) {
                             echo "<input type='hidden' name='$key' value='$value'>";
