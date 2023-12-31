@@ -18,6 +18,7 @@
 - Création base de donnée
 - Création du Dashboard
 - Créeation navbar
+- Création du css général
 
 #### [Gianluca Schileo](https://github.com/Gianluca-Schileo) :
 - Home page (php & css)
