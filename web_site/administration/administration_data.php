@@ -117,18 +117,18 @@
   
         function confirmDelete(data) {
 
-            var xhttp = new XMLHttpRequest();
-            xhttp.open("POST", "check_link_key.php", true);
-            xhttp.setRequestHeader("Content-Type", "application/json");
+            // var xhttp = new XMLHttpRequest();
+            // xhttp.open("POST", "check_link_key.php", true);
+            // xhttp.setRequestHeader("Content-Type", "application/json");
             
-            xhttp.onreadystatechange = function() {
-                if (xhr.readyState == 4 && xhr.status == 200) {
-                    return confirm (xhr.responseText);
-                }
-            };
+            // xhttp.onreadystatechange = function() {
+            //     if (xhr.readyState == 4 && xhr.status == 200) {
+            //         return confirm (xhr.responseText);
+            //     }
+            // };
         
-            var jsonData = JSON.stringify(data);
-            xhttp.send(jsonData);
+            // var jsonData = JSON.stringify(data);
+            // xhttp.send(jsonData);
 
             // var otherTable;
 
@@ -146,6 +146,8 @@
             //     liason = (data['table'] === 'auteur') ? 'cet' : 'ce';
             //     return confirm("Etes vous sur de vouloir supprimer " + liason + " " + data['table']);
             // }
+
+            return confirm("Etes vous sur de vouloir supprimer ?")
         };
 
     </script>
