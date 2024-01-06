@@ -40,3 +40,42 @@ nav {
     top: 0;
     box-shadow: 0px 8px 11px 9px rgba(66, 66, 66, 0.75);
 }
+
+
+/* Set background color for the Navbar */
+.navbar {
+    background-color: #f8f9fa; /* Light gray background color */
+}
+
+/* Style the Navbar brand link */
+.navbar-brand {
+    color: #007bff; /* Blue color */
+    font-weight: bold; /* Bold font weight */
+}
+
+/* Style the Navbar links */
+.navbar-nav .nav-link {
+    color: #000; /* Black color for regular links */
+}
+
+/* Style the active Navbar link */
+.navbar-nav .nav-item.active .nav-link {
+    color: #007bff; /* Blue color for active link */
+}
+
+/* Style the Dropdown menu background color */
+.dropdown-menu {
+    background-color: #f8f9fa; /* Light gray background color for the dropdown */
+}
+
+/* Style the Dropdown items */
+.dropdown-item {
+    color: #000; /* Black color for dropdown items */
+}
+
+/* Style the form input and button in the Navbar */
+.form-control,
+.btn {
+    margin: 5px; /* Add some margin for better spacing */
+}
+    

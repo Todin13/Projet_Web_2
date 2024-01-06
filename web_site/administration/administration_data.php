@@ -2,16 +2,18 @@
     session_start();
     include("../connect_db/db.php");
 
-    // if (!isset($_SESSION['username'])) {
-    //     header('Location: ../home/');
-    //     exit();
-    // } 
+    if (!isset($_SESSION['AdminID'])) {
+        header('Location: ../home/');
+        exit();
+    } 
 
     $tables = ['auteur', 'livre', 'ecrit'];
     
-    $defaultTable = 'auteur';
-    $_SESSION['selectedTable'] = $defaultTable;
-    
+    if (!isset($_SESSION['selectedTable'])){
+        $defaultTable = 'auteur';
+        $_SESSION['selectedTable'] = $defaultTable;
+    }
+
     function sanitizeInput($data) {
         return htmlspecialchars(stripslashes(trim($data)));
     }
@@ -73,6 +75,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
     <link rel="stylesheet" href="administration_data.css">
     <title>Administrations des données</title>
 </head>
@@ -81,9 +84,9 @@
 <script>
         function openModifyPopup(data) {
             
-            var popup = window.open("", "Modifier un element de '" + data['table'] + "'", "width=400,height=400");
+            var popup = window.open("", "Modifier un element de " + data['table'] , "width=400,height=400");
             popup.document.write('<link rel="stylesheet" href="popup.css">')
-            popup.document.write("<h2>Modifier un element de '" + data['table'] + "'</h2>");
+            popup.document.write("<h2>Modifier un element de " + data['table'] + "</h2>");
             popup.document.write("<form method='post' action='edit.php'>");
             popup.document.write("<input type='hidden' name='table' value='" + data['table'] + "'><br>");
             <?php 
@@ -113,11 +116,66 @@
         };
 
   
-        function confirmDelete() {
-            return confirm("Êtes vous sur de vouloir supprimer cet element ?");
+        function confirmDelete(data) {
+
+            // var xhttp = new XMLHttpRequest();
+            // xhttp.open("POST", "check_link_key.php", true);
+            // xhttp.setRequestHeader("Content-Type", "application/json");
+            
+            // xhttp.onreadystatechange = function() {
+            //     if (xhr.readyState == 4 && xhr.status == 200) {
+            //         return confirm (xhr.responseText);
+            //     }
+            // };
+        
+            // var jsonData = JSON.stringify(data);
+            // xhttp.send(jsonData);
+
+            // var otherTable;
+
+            // if (inEcrit) {
+            //     if (data['table'] === 'auteur') {
+            //         otherTable = (nbliaison === 1) ? 'livre' : 'livres';
+            //     } else if (data['table'] === 'livre') {
+            //         otherTable = (nbliaison === 1) ? 'auteur' : 'auteurs';
+            //     } else {
+            //         throw new Error("Problème avec l'accès aux tables");
+            //     }
+            //     liason = (data['table'] === 'auteur') ? 'cet' : 'ce';
+            //     return confirm("Etes vous sur de vouloir supprimer " + liason + " " + data['table'] + " alors qu'il est lié à " + nbliaison + " " + otherTable);
+            // } else {
+            //     liason = (data['table'] === 'auteur') ? 'cet' : 'ce';
+            //     return confirm("Etes vous sur de vouloir supprimer " + liason + " " + data['table']);
+            // }
+
+            return confirm("Etes vous sur de vouloir supprimer ?")
         };
 
     </script>
+
+    <nav class="navbar navbar-expand-lg navbar-light bg-light">
+        <a class="navbar-brand" href="../home/home.php">Home</a>
+
+        <div class="collapse navbar-collapse" id="navbarSupportedContent">
+            <ul class="navbar-nav mr-auto">
+                <li class="nav-item">
+                    <a class="nav-link" href="../home/browse.php">Search</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="../administration/administration_data.php">Administration</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="../tableau_de_bord/tableau_de_bord.php">Dashboard</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="../Profil/profil.php">Profil</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="../logout/logout.php">Lougout</a>
+                </li>
+            
+        </div>
+    </nav>
 
     <div class="container">
         <div class="left-column">
@@ -172,7 +230,7 @@
                         foreach ($row as $value) {
                             echo "<td>$value</td>";
                         }
-                        echo "<td><form method='post' action='delete.php' onsubmit='return confirmDelete()'>";  
+                        echo "<td><form method='post' action='delete.php' onsubmit='return confirmDelete(" . json_encode(['table' => $selectedTable] + $row) . ")'>";  
                         echo "<input type='hidden' name='table' value='$selectedTable'>";
                         foreach ($row as $key => $value) {
                             echo "<input type='hidden' name='$key' value='$value'>";
@@ -196,5 +254,10 @@
             ?>
         </div>
     </div>
+
+    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.10.2/dist/umd/popper.min.js"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+
 </body>
 </html>

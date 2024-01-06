@@ -22,9 +22,16 @@
           <li>
             <a href="browse.html" class="py-2 px-3 text-gray-400 hover:text-gray-400 md:hover:bg-transparent md:hover:text-slate-300 md:p-0 dark:text-sky-500 dark:hover:text-sky-500" aria-current="page">Browse</a>
           </li>
-          <li>
-            <a href="../authentification/authentification.php" class="py-2 px-3 text-white hover:text-gray-400 md:hover:bg-transparent md:hover:text-slate-300 md:p-0 dark:text-slate-300 dark:hover:text-sky-500">Login</a>
-          </li>
+          <?php 
+            if (!isset($_SESSION['AdminID'])) {
+              echo '<li> <a href="../administration/administration_data.php" class="py-2 px-3 text-white hover:text-gray-400 md:hover:bg-transparent md:hover:text-slate-300 md:p-0 dark:text-slate-300 dark:hover:text-sky-500">Administration</a> </li>'; 
+              echo '<li> <a href="../tableau_de_bord/tableau_de_bord.php" class="py-2 px-3 text-white hover:text-gray-400 md:hover:bg-transparent md:hover:text-slate-300 md:p-0 dark:text-slate-300 dark:hover:text-sky-500">Dashboard</a> </li>'; 
+              echo '<li> <a href="../Profil/profil.php" class="py-2 px-3 text-white hover:text-gray-400 md:hover:bg-transparent md:hover:text-slate-300 md:p-0 dark:text-slate-300 dark:hover:text-sky-500">Profil</a> </li>'; 
+              echo '<li> <a href="../logout/logout.php" class="py-2 px-3 text-white hover:text-gray-400 md:hover:bg-transparent md:hover:text-slate-300 md:p-0 dark:text-slate-300 dark:hover:text-sky-500">Logout</a> </li>'; 
+            } else {
+              echo '<li> <a href="../authentification/authentification.php" class="py-2 px-3 text-white hover:text-gray-400 md:hover:bg-transparent md:hover:text-slate-300 md:p-0 dark:text-slate-300 dark:hover:text-sky-500">Login</a> </li>';
+            }
+          ?>
         </ul>
       </div>
     </div>
