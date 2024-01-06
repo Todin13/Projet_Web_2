@@ -12,12 +12,12 @@
 #### [ODIN Thomas](https://github.com/Todin13) :
 - Archi projet
 - Index.php
+- Créeation navbar
 - Administration de la base de données via le site web (php et css)
 
 #### [Laumonier Quentin](https://github.com/OYama1909) :
 - Création base de donnée
 - Création du Dashboard
-- Créeation navbar
 - Création du css général
 
 #### [Gianluca Schileo](https://github.com/Gianluca-Schileo) :
