@@ -31,18 +31,27 @@
         if (isset($_POST[$primaryKeyName])) {
             $deleteQuery = "DELETE FROM `$table` WHERE `$primaryKeyName` = :$primaryKeyName";
             
-            $stmt = $pdo->prepare($deleteQuery);
-        
-            $stmt->bindValue(":$primaryKeyName", sanitizeInput($_POST[$primaryKeyName]));
-        
-            if ($stmt->execute()) {
-                echo "Record deleted successfully.";
-                header('Location: administration_data.php');
-                exit();
-            } else {
-                echo "Error deleting record.";
-                $errorInfo = $stmt->errorInfo();
-                var_dump($errorInfo);
+            try {
+                // Disable foreign key checks
+                $pdo->exec('SET foreign_key_checks = 0');
+                
+                $stmt = $pdo->prepare($deleteQuery);
+                $stmt->bindValue(":$primaryKeyName", sanitizeInput($_POST[$primaryKeyName]));
+                
+                if ($stmt->execute()) {
+                    echo "Record deleted successfully.";
+                    header('Location: administration_data.php');
+                    exit();
+                } else {
+                    echo "Error deleting record.";
+                    $errorInfo = $stmt->errorInfo();
+                    var_dump($errorInfo);
+                }
+            } catch (PDOException $e) {
+                echo "Error: " . $e->getMessage();
+            } finally {
+                // Re-enable foreign key checks
+                $pdo->exec('SET foreign_key_checks = 1');
             }
         } else {
             echo "Invalid request.";
