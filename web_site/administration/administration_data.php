@@ -2,10 +2,10 @@
     session_start();
     include("../connect_db/db.php");
 
-    // if (!isset($_SESSION['AdminID'])) {
-    //     header('Location: ../home/');
-    //     exit();
-    // } 
+    if (!isset($_SESSION['AdminID'])) {
+        header('Location: ../home/');
+        exit();
+    } 
 
     $tables = ['auteur', 'livre', 'ecrit'];
     
